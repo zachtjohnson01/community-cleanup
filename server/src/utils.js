@@ -34,7 +34,6 @@ module.exports.createStore = () => {
       },
       location: {
         type: DataTypes.STRING,
-        // allowNull defaults to true
       },
     },
     {
@@ -44,10 +43,43 @@ module.exports.createStore = () => {
     }
   );
 
-  Event.belongsToMany(User, { through: "event_attendees" });
-  User.belongsToMany(Event, { through: "event_attendees" });
+  class EventAttendee extends Model {}
+  EventAttendee.init(
+    {},
+    {
+      // Other model options go here
+      sequelize, // We need to pass the connection instance
+      modelName: "event_attendee", // We need to choose the model name
+    }
+  );
+
+  Event.belongsToMany(User, { through: "event_attendee" });
+  User.belongsToMany(Event, { through: "event_attendee" });
+
+  class EventAttendeeType extends Model {}
+  EventAttendeeType.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+      },
+    },
+    {
+      // Other model options go here
+      sequelize, // We need to pass the connection instance
+      modelName: "event_attendee_type", // We need to choose the model name
+    }
+  );
+
+  EventAttendee.belongsTo(EventAttendeeType);
 
   // sequelize.sync();
+  // sequelize.sync({ force: true });
 
-  return { sequelize, User };
+  return {
+    sequelize,
+    User,
+    Event,
+    EventAttendee,
+    EventAttendeeType,
+  };
 };

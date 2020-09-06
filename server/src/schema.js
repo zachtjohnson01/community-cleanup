@@ -15,22 +15,51 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(input: CreateUserInput!): CreateUserResponse!
-    createEvent(input: CreateEventInput!): Event!
+    createEvent(input: CreateEventInput!): CreateEventResponse!
+    addAttendeeToEvent(
+      input: AddAttendeeToEventInput!
+    ): AddAttendeeToEventResponse!
+    createEventAttendeeType(
+      input: CreateEventAttendeeTypeInput!
+    ): CreateEventAttendeeTypeResponse!
   }
 
+  input CreateUserInput {
+    name: String!
+    email: String
+  }
   type CreateUserResponse {
     success: Boolean!
     message: String
     user: User
   }
-  input CreateUserInput {
-    name: String!
-    email: String
-  }
 
   input CreateEventInput {
     name: String!
     location: String
+  }
+  type CreateEventResponse {
+    success: Boolean!
+    message: String
+    event: Event
+  }
+  input CreateEventAttendeeTypeInput {
+    name: String!
+  }
+  type CreateEventAttendeeTypeResponse {
+    success: Boolean!
+    message: String
+    eventAttendeeType: EventAttendeeType
+  }
+  input AddAttendeeToEventInput {
+    eventId: ID!
+    userId: ID!
+    typeId: ID
+  }
+  type AddAttendeeToEventResponse {
+    success: Boolean!
+    message: String
+    attendee: EventAttendee
   }
 
   type User {
@@ -39,10 +68,9 @@ const typeDefs = gql`
     email: String
   }
   type EventAttendee {
+    event: Event!
     user: User!
-    eventId: ID!
-    userId: ID!
-    type: ID
+    type: EventAttendeeType
   }
   type Park {
     id: ID!
@@ -58,7 +86,7 @@ const typeDefs = gql`
     location: String
   }
 
-  type EventAttendeeTypes {
+  type EventAttendeeType {
     id: ID!
     name: String!
   }

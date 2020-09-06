@@ -42,17 +42,73 @@ class SiteAPI extends DataSource {
 
   async createUser(userInput) {
     const { name, email } = userInput.input;
-    console.log(name);
-    console.log(email);
     const user = await this.store.User.findOrCreate({
       where: {
         name: name,
         email: email,
       },
     });
-    console.log(user[0]._options.isNewRecord);
+
+    // console.log(user[0]._options.isNewRecord);
 
     return user && user[0] ? user[0] : null;
+  }
+
+  async createEvent(eventInput) {
+    const { name, location } = eventInput.input;
+
+    const event = await this.store.Event.create({
+      name: name,
+      location: location,
+    });
+
+    return event && event ? event : null;
+  }
+  async createEventAttendeeType(eventAttendeeTypeInput) {
+    const { name } = eventAttendeeTypeInput.input;
+
+    const eventAttendeeType = await this.store.EventAttendeeType.create({
+      name: name,
+    });
+
+    return eventAttendeeType && eventAttendeeType ? eventAttendeeType : null;
+  }
+
+  async addAttendeeToEvent(attendeeInput) {
+    const { eventId, userId, attendeeTypeId } = attendeeInput.input;
+
+    const event = await this.store.Event.findOne({
+      where: {
+        id: eventId,
+      },
+    });
+
+    const eventAttendeeType = await this.store.EventAttendeeType.findOne({
+      where: {
+        id: attendeeTypeId,
+      },
+    });
+
+    const user = await this.store.User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    await event.addUser(user);
+
+    const attendee = await this.store.EventAttendee.findOne({
+      where: {
+        userId: userId,
+        eventId: eventId,
+      },
+    });
+
+    await attendee.update({
+      eventAttendeeTypeId: attendeeTypeId,
+    });
+
+    return { event: event, user: user, type: eventAttendeeType };
   }
 }
 
