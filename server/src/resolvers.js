@@ -1,4 +1,11 @@
 module.exports = {
+  Event: {
+    attendees: (event, __, { dataSources }) =>
+      dataSources.siteAPI.getEventAttendeesByEvent({ event: event }),
+  },
+  EventAttendee: {
+    type: (eventAttendee) => eventAttendee.event_attendee_type,
+  },
   Query: {
     parks: (_, __, { dataSources }) => dataSources.parkAPI.getAllParks(),
     events: (_, __, { dataSources }) => dataSources.siteAPI.getAllEvents(),

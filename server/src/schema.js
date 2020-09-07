@@ -7,9 +7,9 @@ const typeDefs = gql`
   scalar Date
 
   type Query {
-    parks: [Park]!
-    events: [Event]!
-    eventAttendees(eventId: ID!): [EventAttendee]!
+    parks: [Park!]!
+    events: [Event!]!
+    eventAttendees(eventId: ID!): [EventAttendee!]!
     event(id: ID!): Event
   }
 
@@ -54,7 +54,7 @@ const typeDefs = gql`
   input AddAttendeeToEventInput {
     eventId: ID!
     userId: ID!
-    typeId: ID
+    attendeeTypeId: ID
   }
   type AddAttendeeToEventResponse {
     success: Boolean!
@@ -68,6 +68,7 @@ const typeDefs = gql`
     email: String
   }
   type EventAttendee {
+    id: ID!
     event: Event!
     user: User!
     type: EventAttendeeType
@@ -84,6 +85,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     location: String
+    attendees: [EventAttendee!]
   }
 
   type EventAttendeeType {

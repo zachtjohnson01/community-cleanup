@@ -45,7 +45,22 @@ module.exports.createStore = () => {
 
   class EventAttendee extends Model {}
   EventAttendee.init(
-    {},
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      eventId: {
+        type: DataTypes.INTEGER,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+      },
+      eventAttendeeTypeId: {
+        type: DataTypes.INTEGER,
+      },
+    },
     {
       // Other model options go here
       sequelize, // We need to pass the connection instance
@@ -53,8 +68,15 @@ module.exports.createStore = () => {
     }
   );
 
-  Event.belongsToMany(User, { through: "event_attendee" });
-  User.belongsToMany(Event, { through: "event_attendee" });
+  Event.belongsToMany(User, {
+    as: "Attendee",
+    through: EventAttendee,
+    foreignKey: "eventId",
+  });
+  User.belongsToMany(Event, { through: EventAttendee, foreignKey: "userId" });
+
+  EventAttendee.belongsTo(User);
+  // Event.hasMany(EventAttendee);
 
   class EventAttendeeType extends Model {}
   EventAttendeeType.init(

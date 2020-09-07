@@ -31,10 +31,21 @@ class SiteAPI extends DataSource {
     return event;
   }
 
-  async getEventAttendeesByEventId(eventId) {
-    const attendees = await this.store.Event.getUsers({
+  async getEventAttendeesByEventId(input) {
+    const { eventId } = input;
+    const attendees = await this.store.EventAttendee.findAll({
       where: {
-        id: eventId,
+        eventId: eventId,
+      },
+    });
+    return attendees;
+  }
+  async getEventAttendeesByEvent(input) {
+    const { event } = input;
+    const attendees = await this.store.EventAttendee.findAll({
+      include: [this.store.User, this.store.EventAttendeeType],
+      where: {
+        eventId: event.id,
       },
     });
     return attendees;
@@ -95,7 +106,7 @@ class SiteAPI extends DataSource {
       },
     });
 
-    await event.addUser(user);
+    await event.addAttendee(user);
 
     const attendee = await this.store.EventAttendee.findOne({
       where: {
