@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 
 import Parks from "../components/parks";
+import Events from "../components/events";
+import CreateEvent from "../components/create-event";
 
 export default function Index() {
   const { site } = useStaticQuery(
@@ -42,7 +44,8 @@ export default function Index() {
           <Button size="sm">Log In</Button>
         </Flex>
         <Box maxW="containers.md" mx="auto">
-          <Parks />
+          <CreateEvent />
+          <Events />
         </Box>
       </>
     </>
