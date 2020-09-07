@@ -22,6 +22,7 @@ const typeDefs = gql`
     createEventAttendeeType(
       input: CreateEventAttendeeTypeInput!
     ): CreateEventAttendeeTypeResponse!
+    updateEvent(input: UpdateEventInput!): UpdateEventResponse!
   }
 
   input CreateUserInput {
@@ -41,7 +42,17 @@ const typeDefs = gql`
   type CreateEventResponse {
     success: Boolean!
     message: String
-    event: Event
+    event: Event!
+  }
+  input UpdateEventInput {
+    id: ID!
+    name: String!
+    location: String
+  }
+  type UpdateEventResponse {
+    success: Boolean!
+    message: String
+    event: Event!
   }
   input CreateEventAttendeeTypeInput {
     name: String!

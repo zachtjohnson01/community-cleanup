@@ -43,7 +43,7 @@ export default function CreateEvent() {
 
   return (
     <>
-      <Button onClick={openModal} variantColor="purple" size="sm">
+      <Button onClick={openModal} variantColor="purple" size="sm" mt="4">
         Create Event
       </Button>
       <Modal isOpen={modalOpen} onClose={closeModal}>

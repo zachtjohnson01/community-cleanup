@@ -44,8 +44,10 @@ export default function Index() {
           <Button size="sm">Log In</Button>
         </Flex>
         <Box maxW="containers.md" mx="auto">
-          <CreateEvent />
-          <Events />
+          <Flex align="left" direction="column">
+            <CreateEvent />
+            <Events />
+          </Flex>
         </Box>
       </>
     </>

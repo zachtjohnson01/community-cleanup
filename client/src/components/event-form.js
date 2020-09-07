@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMutation } from "@apollo/client";
 import {
   Input,
   Button,
   Stack,
   Text,
-  Textarea,
   ModalFooter,
   ModalBody,
 } from "@chakra-ui/core";
@@ -22,6 +21,7 @@ export default function EventForm(props) {
 
     const { name, location } = event.target;
     const input = {
+      id: props.event?.id,
       name: name.value,
       location: location.value,
     };
@@ -31,17 +31,23 @@ export default function EventForm(props) {
   return (
     <form onSubmit={handleSubmit}>
       <ModalBody as={Stack}>
+        {error && <Text color="red.500">{error.message}</Text>}
         <Input
           isRequired
-          defaultValue={props.events?.name}
+          defaultValue={props.event?.name}
           type="text"
           name="name"
           placeholder="Event name"
         />
-        <Input type="text" name="location" placeholder="Event location" />
+        <Input
+          defaultValue={props.event?.location}
+          type="text"
+          name="location"
+          placeholder="Event location"
+        />
       </ModalBody>
       <ModalFooter>
-        <Button mr="2" onClick={PaymentResponse.onCancel}>
+        <Button mr="2" onClick={props.onCancel}>
           Cancel
         </Button>
         <Button variantColor="purple" isLoading={loading} type="submit">

@@ -75,6 +75,23 @@ class SiteAPI extends DataSource {
 
     return event && event ? event : null;
   }
+  async updateEvent(eventInput) {
+    console.log(eventInput.args.input);
+    const { id, name, location } = eventInput.args.input;
+
+    await this.store.Event.update(
+      { name: name, location: location },
+      { where: { id: id } }
+    );
+
+    const event = await this.store.Event.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    return event;
+  }
   async createEventAttendeeType(eventAttendeeTypeInput) {
     const { name } = eventAttendeeTypeInput.input;
 

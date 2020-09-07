@@ -76,5 +76,18 @@ module.exports = {
         attendee,
       };
     },
+    updateEvent: async (_, args, { dataSources }) => {
+      const event = await dataSources.siteAPI.updateEvent({ args });
+      if (!event)
+        return {
+          success: false,
+          message: "failed to update event",
+        };
+      return {
+        success: true,
+        message: "event updated",
+        event,
+      };
+    },
   },
 };
