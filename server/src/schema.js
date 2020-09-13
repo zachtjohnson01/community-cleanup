@@ -1,10 +1,10 @@
 const { gql } = require("apollo-server");
-const { GraphQLScalarType } = require("graphql");
+// const { GraphQLScalarType } = require("graphql");
 const { Kind } = require("graphql/language");
 
 const typeDefs = gql`
   # Your schema will go here
-  scalar Date
+  # scalar Date
 
   type Query {
     parks: [Park!]!
@@ -23,11 +23,17 @@ const typeDefs = gql`
       input: CreateEventAttendeeTypeInput!
     ): CreateEventAttendeeTypeResponse!
     updateEvent(input: UpdateEventInput!): UpdateEventResponse!
+    login(authInput: String!): AuthResponse
+  }
+
+  type AuthResponse {
+    token: String!
   }
 
   input CreateUserInput {
     name: String!
     email: String
+    password: String
   }
   type CreateUserResponse {
     success: Boolean!

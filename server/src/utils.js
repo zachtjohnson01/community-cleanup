@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
 module.exports.createStore = () => {
   const connectionString =
@@ -15,6 +16,10 @@ module.exports.createStore = () => {
       },
       email: {
         type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING,
+        // allowNull defaults to true
       },
     },
     {
@@ -94,6 +99,25 @@ module.exports.createStore = () => {
 
   EventAttendee.belongsTo(EventAttendeeType);
 
+  // sequelize.sync();
+  exports.handler = async () => {
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync("password", salt);
+    await User.create({
+      name: "Zach",
+      email: "zachtjohnson01@gmail.com",
+      password: hash,
+    });
+  };
+  // const salt = bcrypt.genSaltSync(10);
+  // const hash = bcrypt.hashSync("password", salt);
+  // User.create({
+  //   name: "Zach",
+  //   email: "zachtjohnson01@gmail.com",
+  //   password: hash,
+  // });
   // sequelize.sync();
   // sequelize.sync({ force: true });
 

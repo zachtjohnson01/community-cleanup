@@ -8,11 +8,17 @@ module.exports = {
   },
   Query: {
     parks: (_, __, { dataSources }) => dataSources.parkAPI.getAllParks(),
-    events: (_, __, { dataSources }) => dataSources.siteAPI.getAllEvents(),
-    event: (_, { id }, { dataSources }) =>
-      dataSources.siteAPI.getEventById({ eventId: id }),
-    eventAttendees: (_, { eventId }, { dataSources }) =>
-      dataSources.siteAPI.getEventAttendeesByEventId({ eventId: eventId }),
+    events: (_, __, { dataSources }) => {
+      return dataSources.siteAPI.getAllEvents();
+    },
+    event: (_, { id }, { dataSources }) => {
+      return dataSources.siteAPI.getEventById({ eventId: id });
+    },
+    eventAttendees: (_, { eventId }, { dataSources }) => {
+      return dataSources.siteAPI.getEventAttendeesByEventId({
+        eventId: eventId,
+      });
+    },
   },
   Mutation: {
     createUser: async (_, { input }, { dataSources }) => {
@@ -68,8 +74,6 @@ module.exports = {
           message: "failed to add attendee to event",
         };
 
-      // console.log(attendee);
-
       return {
         success: true,
         message: "attendee added to event",
@@ -88,6 +92,15 @@ module.exports = {
         message: "event updated",
         event,
       };
+    },
+    login: async (_, { authInput }, { dataSources }) => {
+      const token = await dataSources.authAPI.authenticateUser({
+        headers: {
+          authorization: `Basic ${authInput}`,
+        },
+      });
+
+      return token;
     },
   },
 };

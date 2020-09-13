@@ -52,11 +52,12 @@ class SiteAPI extends DataSource {
   }
 
   async createUser(userInput) {
-    const { name, email } = userInput.input;
+    const { name, email, password } = userInput.input;
     const user = await this.store.User.findOrCreate({
       where: {
         name: name,
         email: email,
+        password: password,
       },
     });
 
@@ -76,7 +77,6 @@ class SiteAPI extends DataSource {
     return event && event ? event : null;
   }
   async updateEvent(eventInput) {
-    console.log(eventInput.args.input);
     const { id, name, location } = eventInput.args.input;
 
     await this.store.Event.update(
