@@ -12,18 +12,18 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.1.4",
-    "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.35",
-    "emotion-theming": "^10.0.27",
+    "@chakra-ui/core": "^1.0.0-rc.2",
+    "@chakra-ui/theme": "^1.0.0-rc.2",
     "framer-motion": "^2.6.6",
     "gatsby": "^2.24.57",
-    "gatsby-plugin-chakra-ui": "^0.1.4",
+    "gatsby-plugin-chakra-ui": "^1.0.0-rc.2",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-theme-apollo": "^3.0.3",
     "graphql": "^15.3.0",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-icons": "^3.11.0"
   }
 }

@@ -18,6 +18,7 @@ export default function EventForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(props.event?.id);
 
     const { name, location } = event.target;
     const input = {
@@ -50,7 +51,7 @@ export default function EventForm(props) {
         <Button mr="2" onClick={props.onCancel}>
           Cancel
         </Button>
-        <Button variantColor="purple" isLoading={loading} type="submit">
+        <Button colorScheme="purple" isLoading={loading} type="submit">
           {props.buttonText}
         </Button>
       </ModalFooter>

@@ -32,7 +32,6 @@ export const typeDefs = gql`
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // uri: "http://localhost:4000",
   cache: new InMemoryCache(),
   typeDefs,
   resolvers: {

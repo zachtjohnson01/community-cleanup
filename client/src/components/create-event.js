@@ -7,10 +7,7 @@ import {
   ModalOverlay,
   ModalContent,
   Button,
-  ModalBody,
-  Input,
-  Stack,
-  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/core";
 
 import EventForm from "./event-form";
@@ -30,45 +27,38 @@ export const CREATE_EVENT = gql`
   }
 `;
 
-export default function CreateEvent() {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  function closeModal() {
-    setModalOpen(false);
-  }
-
-  function openModal() {
-    setModalOpen(true);
-  }
+export default function CreateEvent(props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Button onClick={openModal} variantColor="purple" size="sm" mt="4">
+      <Button onClick={onOpen} colorScheme="purple" size="sm" mt="4">
         Create Event
       </Button>
-      <Modal isOpen={modalOpen} onClose={closeModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create Event</ModalHeader>
-          <ModalCloseButton />
-          <EventForm
-            buttonText="Create Event"
-            onCancel={closeModal}
-            mutation={CREATE_EVENT}
-            mutationOptions={{
-              onCompleted: closeModal,
-              update: (cache, { data }) => {
-                const { events } = cache.readQuery({ query: GET_EVENTS });
-                cache.writeQuery({
-                  query: GET_EVENTS,
-                  data: {
-                    events: [data.createEvent, ...events],
-                  },
-                });
-              },
-            }}
-          />
-        </ModalContent>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>Create Event</ModalHeader>
+            <ModalCloseButton />
+            <EventForm
+              buttonText="Create Event"
+              onCancel={onClose}
+              mutation={CREATE_EVENT}
+              mutationOptions={{
+                onCompleted: onClose,
+                update: (cache, { data }) => {
+                  const { events } = cache.readQuery({ query: GET_EVENTS });
+                  cache.writeQuery({
+                    query: GET_EVENTS,
+                    data: {
+                      events: [data.createEvent, ...events],
+                    },
+                  });
+                },
+              }}
+            />
+          </ModalContent>
+        </ModalOverlay>
       </Modal>
     </>
   );
