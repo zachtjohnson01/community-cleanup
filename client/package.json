@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "resolutions": {
+    "express": "4.21.2"
+  },
   "dependencies": {
     "@apollo/client": "^3.1.4",
     "@chakra-ui/core": "^1.0.0-rc.2",
