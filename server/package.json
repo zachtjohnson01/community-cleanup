@@ -11,13 +11,14 @@
   "author": "",
   "license": "ISC",
   "resolutions": {
-    "express": "4.21.2"
+    "express": "4.22.3"
   },
   "dependencies": {
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server": "^2.17.0",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
+    "express": "4.22.3",
     "graphql": "^15.3.0",
     "jsonwebtoken": "9.0.2",
     "nodemon": "^2.0.4",

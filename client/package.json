@@ -11,12 +11,13 @@
   "author": "",
   "license": "ISC",
   "resolutions": {
-    "express": "4.21.2"
+    "express": "4.22.3"
   },
   "dependencies": {
     "@apollo/client": "^3.1.4",
     "@chakra-ui/core": "^1.0.0-rc.2",
     "@chakra-ui/theme": "^1.0.0-rc.2",
+    "express": "4.22.3",
     "framer-motion": "^2.6.6",
     "gatsby": "^2.24.57",
     "gatsby-plugin-chakra-ui": "^1.0.0-rc.2",
